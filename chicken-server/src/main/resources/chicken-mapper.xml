@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="team.gtfm.chicken.chickenMapper">
+  <select id="selectChickenFromRowNum" resultType="team.gtfm.server.bean.Chicken">
+    select * from chicken_tb where row_num = #{row_num}
+  </select>
+  
+  <select id="selectChicken" resultType="team.gtfm.server.bean.Chicken">
+  	select * from chicken_tb limit ${start}, ${limit}
+  </select>
+</mapper>
