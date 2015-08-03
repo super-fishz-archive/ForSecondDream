@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<title>Sample</title>
+</head>
+<body>
+	<input id="addressText" type="text" palceholder="address">
+	<button onclick="find()">Find</button>
+	<div id="map" style="width:500px;height:400px;"></div>
+	<script type="text/javascript" src="https://apis.daum.net/maps/maps3.js?apikey=2352865f72420852e91923e025216a73&libraries=services"></script>
+	<script>
+		var container = document.getElementById('map');
+		var options = {
+			center: new daum.maps.LatLng(33.450701, 126.570667),
+			level: 3
+		};
+
+		var map = new daum.maps.Map(container, options);
+		//�ּ�-��ǥ ��ȯ ��ü�� ����
+		var geocoder = new daum.maps.services.Geocoder();
+
+		function find(){
+			var value = document.getElementById("addressText").value;
+			alert(value);
+			
+			//�ּҷ� ��ǥ�� �˻�
+			geocoder.addr2coord(value, function(status, result){
+				alert(value + "/" + status + "/" + JSON.stringify(result));
+				
+				//���������� �˻��� �Ϸ������
+				if(status == daum.maps.services.Status.OK){
+					var coords = new daum.maps.LatLng(result.addr[0].lat, result.addr[0].lng);
+
+					var marker = new daum.maps.Marker({
+						map: map,
+						position: coords
+					});
+
+					var infowindow = new daum.maps.InfoWindow({
+						content: '<div style="padding:5px;">Here</div>'
+					});
+					infowindow.open(map, marker);
+
+				}					
+			});
+		}
+	</script>
+</body>
+</html>
