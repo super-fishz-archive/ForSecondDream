@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="https://apis.daum.net/maps/maps3.js?apikey=2352865f72420852e91923e025216a73&libraries=services"></script>
+</head>
+<body>
+<h1>Init Coord : <span id="count">0</span></h1>
+<button id="start">Start</button>
+<button id="insertCoordTest">Testing Coord insert</button>
+<button id="check">Check</button>
+<p id="log"></p>
+<script>
+	$(document).ready(function(){
+		$("#start").click(function(){
+			start();
+		});	
+		
+		$("#insertCoordTest").click(function(){
+			test();
+		});
+		
+		$("#check").click(function(){
+			$("#log").text(JSON.stringify(coordList));
+		});
+	});
+	
+	var coordList = [];
+	function start(){
+		var size = 200;//61500;
+		for(var i=0 ; i<size ; i = i + 100){
+			var resultData = [];
+			
+			var url = "/data/chicken/summary-chicken?start=" + i + "&limit=100";
+			$.ajax({
+				"url" : url,
+				"async" : false,
+				"type" : "get",
+				"datatype" : "json",
+				"success" : callDaumAPI
+			});
+		}
+		
+		
+		
+		alert("success");
+	}
+	
+
+	function callDaumAPI(data){
+		
+		var geocoder = new daum.maps.services.Geocoder();
+
+		for(var i=0 ; i<data.length ; i++){
+			var addr, num;
+			if(data[i]["siteWhlAddr"] != ""){
+				addr = data[i]["siteWhlAddr"];
+			}else{
+				addr = data[i]["rdnWhlAddr"];
+			}
+
+			geocoder.addr2coord(addr, function(status, result){
+	
+				if(status == daum.maps.services.Status.OK){
+					var coords = {
+							"chickenRowNum" : num,
+							"lat" : result.addr[0].lat, 
+							"lng" : result.addr[0].lng };
+					coordList.push(coords);
+				}					
+			});
+		}
+	}
+	
+	function insertCoords(data){
+		$.ajax({
+			"url" : "/data/chicken/coord",
+			"type" : "post",
+			"headers" : {
+				"Content-Type" : "application/json;charset=utf-8"
+			},
+			"data" : JSON.stringify(data),
+			"datatype" : "json",
+			"success" : function(returnData){
+				alert(JSON.stringify(returnData));
+			}
+		});
+	}
+	
+	function test(){
+		var data = [
+		            {"chickenRowNum" : 1, "lat" : 32.123, "lng" : 15.1421},
+		            {"chickenRowNum" : 2, "lat" : 32.13, "lng" : 115.1421},
+		            {"chickenRowNum" : 3, "lat" : 32.11223, "lng" : 144.1421},
+			];
+		
+		$.ajax({
+			"url" : "/data/chicken/coord",
+			"type" : "post",
+			"headers" : {
+				"Content-Type" : "application/json;charset=utf-8"
+			},
+			"data" : JSON.stringify(data),
+			"datatype" : "json",
+			"success" : function(returnData){
+				alert(JSON.stringify(returnData));
+			}
+		});
+	}
+</script>
+</body>
+</html>

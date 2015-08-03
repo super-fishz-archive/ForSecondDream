@@ -17,18 +17,18 @@
 		};
 
 		var map = new daum.maps.Map(container, options);
-		//�ּ�-��ǥ ��ȯ ��ü�� ����
+
 		var geocoder = new daum.maps.services.Geocoder();
 
 		function find(){
 			var value = document.getElementById("addressText").value;
 			alert(value);
 			
-			//�ּҷ� ��ǥ�� �˻�
+	
 			geocoder.addr2coord(value, function(status, result){
 				alert(value + "/" + status + "/" + JSON.stringify(result));
 				
-				//���������� �˻��� �Ϸ������
+
 				if(status == daum.maps.services.Status.OK){
 					var coords = new daum.maps.LatLng(result.addr[0].lat, result.addr[0].lng);
 

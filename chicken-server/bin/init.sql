@@ -35,3 +35,11 @@ character set euckr
 fields terminated by ','
 enclosed by '\"'
 lines terminated by '\n';
+
+create table coord_tb(
+	chicken_row_num int not null,
+	lat double,
+	lng double,
+	primary key(chicken_row_num),
+	foreign key(chicken_row_num) references chicken_tb(row_num)
+)default charset euckr;
