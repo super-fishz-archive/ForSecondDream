@@ -1,27 +1,27 @@
 package team.gtfm.analize;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.StringTokenizer;
 
 public class Address {
 	
-	private String firstAddress;
-	private String secondAddress;
-	private String thirdAddress;
+	private List<String> addrs = new ArrayList<>();
 	private String fullAddress;
 	
 	public Address(String fullAddress){
 		this.fullAddress = fullAddress;
+		if(fullAddress == null || fullAddress.equals(""))
+			return;
 		
 		String needAddress = evalAddress(fullAddress);
 		
-		StringBuilder builder = new StringBuilder();
 		StringTokenizer tokenizer = new StringTokenizer(needAddress);
-		builder.append(tokenizer.nextToken());
-		this.firstAddress = builder.toString();
-		builder.append(tokenizer.nextToken());
-		this.secondAddress = builder.toString();
-		builder.append(tokenizer.nextToken());
-		this.thirdAddress = builder.toString();
+		
+		while(tokenizer.hasMoreTokens()){
+			addrs.add(tokenizer.nextToken());
+		}
+
 	}
 	
 	protected String evalAddress(String inAddr){
@@ -31,23 +31,24 @@ public class Address {
 		int i=0;
 		while(i < 3 && tokenizer.hasMoreTokens()){
 			builder.append(tokenizer.nextToken() + " ");
+			i++;
 		}
 		
 		return builder.toString();
 	}
 
-	public String getFirstAddress() {
-		return firstAddress;
+	public String getAddress(int index){
+		try{
+			return this.addrs.get(index);
+		}catch(Exception e){
+			throw new RuntimeException("Error Address. " + index);
+		}
 	}
-
-	public String getSecondAddress() {
-		return secondAddress;
+	
+	public int length(){
+		return addrs.size();
 	}
-
-	public String getThirdAddress() {
-		return thirdAddress;
-	}
-
+	
 	public String getFullAddress() {
 		return fullAddress;
 	}
