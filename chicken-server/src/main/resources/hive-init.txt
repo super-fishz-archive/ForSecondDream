@@ -1,0 +1,34 @@
+--$HIVE_HOME/bin/hive
+
+CREATE TABLE chicken_open_close_tb (address STRING, open_num INT, close_num INT) ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t' STORED AS TEXTFILE;
+
+LOAD DATA LOCAL INPATH 'chicken_open_close' INTO TABLE chicken_open_close_tb;
+
+DROP TABLE chicken_tb;
+
+CREATE TABLE chicken_tb (
+row_num int,
+bplc_nm string,
+site_whl_addr string,
+rdn_whl_addr string,
+apv_perm_ymd string,
+trd_state_nm string,
+site_area int,
+site_post_no int,
+wtr_sply_facil_se_nm string,
+man_eip_cnt int,
+yy int,
+mult_usn_upso_yn string, 
+lv_se_nm string,
+facil_tot_scp string,
+wm_eip_cnt int,
+trdp_jubn_se_nm string,
+snt_cob_nm string,
+snt_uptae_nm string,
+tot_ep_num int,
+memo string,
+kind string,
+kind_detail string
+) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' STORED AS TEXTFILE;
+
+LOAD DATA LOCAL INPATH 'chicken.csv' INTO TABLE chicken_tb;
