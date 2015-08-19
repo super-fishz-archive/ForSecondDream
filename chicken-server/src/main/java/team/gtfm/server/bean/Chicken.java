@@ -2,6 +2,11 @@ package team.gtfm.server.bean;
 
 import java.util.Date;
 
+/**
+ * TODO apvPermYmd는 현재 Date타입인데 Hive에서도 올바르게 동작할지는 모른다.
+ * @author kwSeo
+ *
+ */
 public class Chicken {
 	private int rowNum;
 	private String bplcNm;
@@ -21,7 +26,6 @@ public class Chicken {
 	private String trdpJubnSeNm;
 	private String sntCobNm;
 	private String sntUptaeNm;
-	private int totEpNum;
 	private String memo;
 	private String kind;
 	private String kind_detail;
@@ -168,14 +172,6 @@ public class Chicken {
 
 	public void setSntUptaeNm(String sntUptaeNm) {
 		this.sntUptaeNm = sntUptaeNm;
-	}
-
-	public int getTotEpNum() {
-		return totEpNum;
-	}
-
-	public void setTotEpNum(int totEpNum) {
-		this.totEpNum = totEpNum;
 	}
 
 	public String getMemo() {
