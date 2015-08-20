@@ -96,9 +96,10 @@
       <div class="col-md-12">
       <div class="row">
       <div class="col-md-10 main" id="map-wrapper">
-      <div id="map" style="height:680px;"></div>
+     	 <div id="map" style="height:680px;"></div>
       </div>
-      <div class="col-md-2">
+      <div class="col-md-2 main" id="countAll">
+      	
       </div>
       <div id="loadingDiv">
               <img src="/lc.gif" id="loading" />
@@ -113,6 +114,7 @@
       var oooo =[];
       var resultAll;
       var flag = 0;
+      var flag2 = 0;
       var drawingLine = new daum.maps.Polyline({
           strokeWeight: 3, // 선의 두께입니다
           strokeColor: '#00a0e9', // 선의 색깔입니다
@@ -141,7 +143,8 @@ var circle = new daum.maps.Circle({
 });
 
 daum.maps.event.addListener(map, 'click', function(mouseEvent) {
-	
+	flag = 0;
+	flag2 = 0;
 	if(markers.length > 0){
 		setMarkers(null); 
 		markers = [];
@@ -164,6 +167,12 @@ daum.maps.event.addListener(map, 'click', function(mouseEvent) {
 			var tempResult = resultAll.summaryChickens[i];
 			geocoder.addr2coord(tempResult.siteWhlAddr, requestFunc(tempResult, latlng));
 		}
+	    if(oooo.length == 0){
+	    	 $("#countAll").html(
+	 	        	'<div> 주변 업체 총수 : '+ flag +'</div>'		 
+	 	        	 );
+	    }
+	    circle.setMap(map);
 	    
     }else {
     	alert("기다려");
@@ -171,7 +180,7 @@ daum.maps.event.addListener(map, 'click', function(mouseEvent) {
        
 
 
-    circle.setMap(map);
+   
     
 });
 
@@ -201,6 +210,7 @@ function requestFunc(data, latlng){
 		// 정상적으로 검색이 완료됐으면 
 	 	if (status === daum.maps.services.Status.OK) {
 	 		var coords = new daum.maps.LatLng(resultz.addr[0].lat, resultz.addr[0].lng);
+	 		
 	    	 var linePath = [latlng, coords];   
 	    	// 그려지고 있는 선을 표시할 선 객체에 좌표 배열을 설정합니다
 	         drawingLine.setPath(linePath);  
@@ -208,9 +218,21 @@ function requestFunc(data, latlng){
 	         var length = drawingLine.getLength();
 	         if(Math.round(length) <500){
 	        	 /* debugger; */
+	        	 console.log(coords);
 	        	 oooo.push(tempResult);
 	        	 addMarker(coords);
+	        	 if(data.trdStateNm == '운영중'){
+	        		 flag++;
+	        	 }
+	        	 if(data.trdStateNm == '폐업 등'){
+	        		 flag2++;
+	        	 }
 	        	 
+	        	 
+	        	 $("#countAll").html(
+	        	'<div><h3> 운영 업체 총수 : '+ flag  +'</h3></div>'+
+	        	'<div><h3> 폐업 업체 총수 : '+ flag2  +'</h3></div>'
+	        	 );
 	         }
 	         
 	        
