@@ -159,6 +159,10 @@
       <div class="col-md-10 main" id="map-wrapper">
       <div id="map" style="height:680px;"></div>
       </div>
+      <div id="loadingDiv">
+              <img src="/lc.gif" id="loading" />
+      </div>
+      </div>
       </div>
       
       <script>
@@ -308,19 +312,18 @@ function setMarkers(map) {
       $(document).ready(function() {
     	  $('#map').height($(document).height() - 270 + "px");
     	  $('#temp').click(function(){
+    	      $('#loadingDiv').toggle();
     		  $.ajax({
     	        	url: "http://119.205.252.243:8080/data/chicken/local/충청북도/충주시/단월동",
     	        	type: "get",
 
     	        	datatype: "json",
     	        	success: function(result){
+    	      $('#loadingDiv').toggle();
     	        		console.log( 'result');
     	        		console.log( result);
     	        		
     	        		resultAll = result;
-    	        		
-    	        		
-    	        		    	 
     	          },
     	        	error: function(){
     	        		
