@@ -1,0 +1,346 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+<link href="starter-template.css" rel="stylesheet">
+<script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=06f2863fc2eafefffa21cd50eab7e072&libraries=services"></script>
+    <title>For Second Dream</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+   
+    <script src="http://getbootstrap.com/assets/js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">For Second Dream</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="index.html">홈</a></li>
+            <li><a href="contact.htm">담당자 연락처</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+
+
+
+    <div class="container" style="width: 100%">
+ <div class="row" style="height:100%; width:100%; margin:0 auto;">
+  <div class="col-md-4 region_area">
+  <h5>시/도</h5>
+  <div class="list-group">
+  <a href="#" class="list-group-item active">세종특별자치시</a>
+  <a href="#" class="list-group-item">서울</a>
+  <a href="#" class="list-group-item">부산</a>
+  <a href="#" class="list-group-item">대구</a>
+  <a href="#" class="list-group-item">인천</a>
+  <a href="#" class="list-group-item">광주</a>
+  <a href="#" class="list-group-item">대전</a>
+  <a href="#" class="list-group-item">울산</a>
+  <a href="#" class="list-group-item">경기도</a>
+  <a href="#" class="list-group-item">강원도</a>
+  <a href="#" class="list-group-item">충청북도</a>
+  <a href="#" class="list-group-item">충청남도</a>
+  <a href="#" class="list-group-item">전라북도</a>
+  <a href="#" class="list-group-item">전라남도</a>
+  <a href="#" class="list-group-item">경상북도</a>
+  <a href="#" class="list-group-item">경상남도</a>
+  <a href="#" class="list-group-item">제주</a>
+</div>
+         
+</div>
+  <div class="col-md-4 region_area">
+  <h5>구/시</h5>
+  <div class="list-group">
+  <a href="#" class="list-group-item active">세종특별자치시</a>
+  <a href="#" class="list-group-item">서울</a>
+  <a href="#" class="list-group-item">부산</a>
+</div></div>
+  <div class="col-md-4 region_area">
+  <h5>구/시</h5>
+  <div class="list-group">
+  <a href="#" id="temp" class="list-group-item active">세종특별자치시</a>
+  <a href="#" class="list-group-item">서울</a>
+  <a href="#" class="list-group-item">부산</a>	
+        </div>
+      </div>
+      <div class="col-md-12">
+      <div class="row">
+      <div class="col-md-2">
+      <!-- --->
+      <div class="row">
+  <div class="col-lg-12 padding-top-little">
+    <div class="input-group">
+      <span class="input-group-addon">
+        <input type="checkbox" aria-label="...">
+      </span>
+     <label class="form-control">폐업 표시</label>
+    </div><!-- /input-group -->
+    <div class="input-group">
+      <span class="input-group-addon">
+        <input type="checkbox" aria-label="...">
+      </span>
+     <label class="form-control">폐업 표시</label>
+    </div><!-- /input-group -->
+    <div class="input-group">
+      <span class="input-group-addon">
+        <input type="checkbox" aria-label="...">
+      </span>
+     <label class="form-control">폐업 표시</label>
+    </div><!-- /input-group -->
+    <div class="input-group">
+      <span class="input-group-addon">
+        <input type="checkbox" aria-label="...">
+      </span>
+     <label class="form-control">폐업 표시</label>
+    </div><!-- /input-group -->
+    <div class="input-group">
+      <span class="input-group-addon">
+        <input type="checkbox" aria-label="...">
+      </span>
+     <label class="form-control">폐업 표시</label>
+    </div><!-- /input-group -->
+    <div class="input-group">
+      <span class="input-group-addon">
+        <input type="checkbox" aria-label="...">
+      </span>
+     <label class="form-control">폐업 표시</label>
+    </div><!-- /input-group -->
+    <div class="input-group">
+      <span class="input-group-addon">
+        <input type="checkbox" aria-label="...">
+      </span>
+     <label class="form-control">폐업 표시</label>
+    </div><!-- /input-group -->
+    <div class="input-group">
+      <span class="input-group-addon">
+        <input type="checkbox" aria-label="...">
+      </span>
+     <label class="form-control">폐업 표시</label>
+    </div><!-- /input-group -->
+  </div><!-- /.col-lg-6 -->
+</div><!-- /.row -->
+      <!-- --->
+      </div>
+      <div class="col-md-10 main" id="map-wrapper">
+      <div id="map" style="height:680px;"></div>
+      </div>
+      <div id="loadingDiv">
+              <img src="/lc.gif" id="loading" />
+      </div>
+      </div>
+      </div>
+      
+      <div id="overlayForm" >
+	  	  <div class="customoverlay" id="uniq">
+	         <a href="http://map.daum.net/link/map/11394059" target="_blank">
+	          <span id="chickenNum" class="title"></span>
+	           <span id="chickenOpenNum" class="title"></span>
+	           <span id="chickenCloseNum" class="title"></span>
+	         </a>
+	       </div>
+	  </div>
+    		         
+      <script>
+      var markers = [];
+      var oooo =[];
+      var resultAll;
+      var flag = 0;
+      var drawingLine = new daum.maps.Polyline({
+          strokeWeight: 3, // 선의 두께입니다
+          strokeColor: '#00a0e9', // 선의 색깔입니다
+          strokeOpacity: 1, // 선의 불투명도입니다 0에서 1 사이값이며 0에 가까울수록 투명합니다
+          strokeStyle: 'solid' // 선의 스타일입니다
+      });
+
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+    mapOption = { 
+        center: new daum.maps.LatLng(36.947845, 127.908517), // 지도의 중심좌표
+        level: 4 // 지도의 확대 레벨
+        };
+var geocoder = new daum.maps.services.Geocoder();
+var map = new daum.maps.Map(mapContainer, mapOption);
+
+
+var circle = new daum.maps.Circle({
+    center : new daum.maps.LatLng(null, null),  // 원의 중심좌표 입니다 
+    radius: 500, // 미터 단위의 원의 반지름입니다 
+    strokeWeight: 5, // 선의 두께입니다 
+    strokeColor: '#75B8FA', // 선의 색깔입니다
+    strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+    strokeStyle: 'dashed', // 선의 스타일 입니다
+    fillColor: '#CFE7FF', // 채우기 색깔입니다
+    fillOpacity: 0.7  // 채우기 불투명도 입니다   
+});
+
+daum.maps.event.addListener(map, 'click', function(mouseEvent) {
+	
+	if(markers.length > 0){
+		setMarkers(null); 
+		markers = [];
+	}
+	if(oooo.length > 0){
+		oooo = [];
+	}
+    // 클릭한 위도, 경도 정보를 가져옵니다 
+    var latlng = mouseEvent.latLng; 
+    var customOverlay = new daum.maps.CustomOverlay({
+    	map:map,
+	    position: mouseEvent.latLng,
+	    yAnchor: 1 
+	});
+    
+    addMarker(latlng);
+    circle.setPosition(new daum.maps.LatLng(latlng.getLat(), latlng.getLng()));
+	
+    if(typeof resultAll != "undefined"){
+	    	
+	    // 마커 위치를 클릭한 위치로 옮깁니다
+	    
+	    for(var i =0;i<resultAll.summaryChickens.length;i++){
+			var tempResult = resultAll.summaryChickens[i];
+			geocoder.addr2coord(tempResult.siteWhlAddr, requestFunc(tempResult, latlng));
+		}
+	    
+    }else {
+    	alert("기다려");
+    }
+       
+
+
+	var content = $("#overlayForm").html();
+   	customOverlay.setContent(content);
+   	customOverlay.setMap(map);
+		        	   
+	
+		
+    circle.setMap(map);
+    
+});
+
+function searchAddrFromCoords(coords, callback) {
+    // 좌표로 주소 정보를 요청합니다
+    geocoder.coord2addr(coords, callback);         
+}
+function addMarker(position) {
+    
+    // 마커를 생성합니다
+    var marker = new daum.maps.Marker({
+        position: position
+    });
+
+    // 마커가 지도 위에 표시되도록 설정합니다
+    marker.setMap(map);
+    
+    // 생성된 마커를 배열에 추가합니다
+    markers.push(marker);
+}
+
+
+function requestFunc(data, latlng){
+	var tempResult = data;
+	
+	return function(status, resultz){
+		// 정상적으로 검색이 완료됐으면 
+	 	if (status === daum.maps.services.Status.OK) {
+	 		var coords = new daum.maps.LatLng(resultz.addr[0].lat, resultz.addr[0].lng);
+	    	 var linePath = [latlng, coords];   
+	    	// 그려지고 있는 선을 표시할 선 객체에 좌표 배열을 설정합니다
+	         drawingLine.setPath(linePath);  
+	         // 원의 반지름을 선 객체를 이용해서 얻어옵니다 
+	         var length = drawingLine.getLength();
+	         if(Math.round(length) <500){
+	        	 /* debugger; */
+	        	 oooo.push(tempResult);
+	        	 addMarker(coords);
+	        	 
+	         }
+	         
+	        
+	 	}
+		
+	}
+}
+
+function setMarkers(map) {
+    for (var i = 0; i < markers.length; i++) {
+        markers[i].setMap(map);
+    }            
+}
+
+</script>
+</div>
+    </div><!-- /.container -->
+<footer class="row">
+© GTFM. All Rights Reserved.
+</footer>
+    </div><!-- /.container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+      <script>
+      
+      $(document).ready(function() {
+    	  $('#map').height($(document).height() - 270 + "px");
+    	  $('#temp').click(function(){
+    	      $('#loadingDiv').toggle();
+    		  $.ajax({
+    	        	url: "http://119.205.252.243:8080/data/chicken/local/충청북도/충주시/단월동",
+    	        	type: "get",
+
+    	        	datatype: "json",
+    	        	success: function(result){
+<<<<<<< HEAD
+    	        		
+=======
+    	      $('#loadingDiv').toggle();
+    	        		console.log( 'result');
+    	        		console.log( result);
+>>>>>>> branch 'master' of https://github.com/super-fishz/ForSecondDream.git
+    	        		
+    	        		resultAll = result;
+    	          },
+    	        	error: function(){
+    	        		
+    	        	}
+    	        });
+    	  })
+      });
+      </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>

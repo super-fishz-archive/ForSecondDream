@@ -141,8 +141,15 @@ var circle = new daum.maps.Circle({
     fillColor: '#CFE7FF', // 채우기 색깔입니다
     fillOpacity: 0.7  // 채우기 불투명도 입니다   
 });
+var infowindow = new daum.maps.InfoWindow({
+	removable : true
+});
 
+var infowindow;
 daum.maps.event.addListener(map, 'click', function(mouseEvent) {
+	if(infowindow != null){
+		infowindow.close();
+	}
 	flag = 0;
 	flag2 = 0;
 	if(markers.length > 0){
@@ -152,11 +159,22 @@ daum.maps.event.addListener(map, 'click', function(mouseEvent) {
 	if(oooo.length > 0){
 		oooo = [];
 	}
+	
+	infowindow.close();
     // 클릭한 위도, 경도 정보를 가져옵니다 
     var latlng = mouseEvent.latLng; 
     
     
-    addMarker(latlng);
+    /* var marker = new daum.maps.Marker({
+        position: latlng,
+        clickable: true
+    });
+
+    // 마커가 지도 위에 표시되도록 설정합니다
+    marker.setMap(map);
+    
+    // 생성된 마커를 배열에 추가합니다
+    markers.push(marker); */
     circle.setPosition(new daum.maps.LatLng(latlng.getLat(), latlng.getLng()));
 	
     if(typeof resultAll != "undefined"){
@@ -188,11 +206,12 @@ function searchAddrFromCoords(coords, callback) {
     // 좌표로 주소 정보를 요청합니다
     geocoder.coord2addr(coords, callback);         
 }
-function addMarker(position) {
+/* function addMarker(position) {
     
     // 마커를 생성합니다
     var marker = new daum.maps.Marker({
-        position: position
+        position: position,
+        clickable: true
     });
 
     // 마커가 지도 위에 표시되도록 설정합니다
@@ -200,7 +219,7 @@ function addMarker(position) {
     
     // 생성된 마커를 배열에 추가합니다
     markers.push(marker);
-}
+} */
 
 
 function requestFunc(data, latlng){
@@ -220,12 +239,46 @@ function requestFunc(data, latlng){
 	        	 /* debugger; */
 	        	 console.log(coords);
 	        	 oooo.push(tempResult);
-	        	 addMarker(coords);
+	        	 
 	        	 if(data.trdStateNm == '운영중'){
 	        		 flag++;
+	        		 
+	        		var marker = new daum.maps.Marker({
+	        	        position: coords,
+	        	        clickable: true
+	        	    });
+
+	        		var iwContent = '<div id="uniq" style="padding:5px;">'+ 
+	        						'<div>'+tempResult.bplcNm+'</div>'+
+	        						'<div>'+tempResult.siteWhlAddr+'</div>'+
+	        						'</div>'; // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+        		     // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
+
+        		// 인포윈도우를 생성합니다
+        		
+
+        		// 마커에 클릭이벤트를 등록합니다
+        		daum.maps.event.addListener(marker, 'click', function() {
+        		      // 마커 위에 인포윈도우를 표시합니다
+        		      if(infowindow != null){
+        		    	  infowindow.close();
+        		      }
+        		       infowindow = new daum.maps.InfoWindow({
+						removable : true
+					});
+        		      infowindow.setContent(iwContent);
+        		      infowindow.open(map, marker);  
+        		});
+	        	    // 마커가 지도 위에 표시되도록 설정합니다
+	        	    marker.setMap(map);
+	        	    
+	        	    // 생성된 마커를 배열에 추가합니다
+	        	    markers.push(marker);
 	        	 }
+	        	
 	        	 if(data.trdStateNm == '폐업 등'){
 	        		 flag2++;
+	        		 
 	        	 }
 	        	 
 	        	 
