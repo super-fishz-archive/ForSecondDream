@@ -88,7 +88,7 @@
   <div class="col-md-4 region_area">
   <h5>구/시</h5>
   <div class="list-group">
-  <a href="#" class="list-group-item active">세종특별자치시</a>
+  <a href="#" id="temp" class="list-group-item active">세종특별자치시</a>
   <a href="#" class="list-group-item">서울</a>
   <a href="#" class="list-group-item">부산</a>	
         </div>
@@ -162,21 +162,16 @@
       </div>
       
       <script>
-      var result = new Array(1);
       var markers = [];
+      var oooo =[];
+      var resultAll;
       var drawingLine = new daum.maps.Polyline({
           strokeWeight: 3, // 선의 두께입니다
           strokeColor: '#00a0e9', // 선의 색깔입니다
           strokeOpacity: 1, // 선의 불투명도입니다 0에서 1 사이값이며 0에 가까울수록 투명합니다
           strokeStyle: 'solid' // 선의 스타일입니다
       });
-      for(var i=0;i<result.length;i++){
-    	  result[i] = new Array(3);
-      }
-      result[0][0] = "네네 치킨";
-      result[0][1] = "충청북도 충주시 달천동 479-16";
-      result[0][2] = true;
-      
+
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
     mapOption = { 
         center: new daum.maps.LatLng(36.947845, 127.908517), // 지도의 중심좌표
@@ -184,6 +179,7 @@ var mapContainer = document.getElementById('map'), // 지도를 표시할 div
         };
 var geocoder = new daum.maps.services.Geocoder();
 var map = new daum.maps.Map(mapContainer, mapOption);
+
 
 var circle = new daum.maps.Circle({
     center : new daum.maps.LatLng(null, null),  // 원의 중심좌표 입니다 
@@ -197,58 +193,78 @@ var circle = new daum.maps.Circle({
 });
 
 daum.maps.event.addListener(map, 'click', function(mouseEvent) {
+	if(document.getElementById("uniq")!= null){
+	    document.getElementById("uniq").remove();
+ 	}
     // 클릭한 위도, 경도 정보를 가져옵니다 
     var latlng = mouseEvent.latLng; 
+    var customOverlay = new daum.maps.CustomOverlay({
+    	map:map,
+	    position: mouseEvent.latLng,
+	    yAnchor: 1 
+	});
     setMarkers(null);   
     addMarker(latlng);
     circle.setPosition(new daum.maps.LatLng(latlng.getLat(), latlng.getLng()));
+	
+    if(typeof resultAll != "undefined"){
+    	console.log(typeof resultAll);
     // 마커 위치를 클릭한 위치로 옮깁니다
-   
-    /* $.jax({
-    	url: ,
-    	type: "get",
-    	datatype: "json",
-    	success: function(result){
-    		result
-    	},
-    	error: function(){
-    		
-    	}
-    }) */
-    var temp;
-     searchAddrFromCoords(mouseEvent.latLng, function(status, results) {
-        if (status === daum.maps.services.Status.OK) {
-
+    for(var i =0;i<resultAll.summaryChickens.length;i++){
+		var tempResult = resultAll.summaryChickens[i];
+		geocoder.addr2coord(tempResult.siteWhlAddr, function(status, resultz) {
+	    	// 정상적으로 검색이 완료됐으면 
+	     	if (status === daum.maps.services.Status.OK) {
+	     		var coords = new daum.maps.LatLng(resultz.addr[0].lat, resultz.addr[0].lng);
+		    	 var linePath = [latlng, coords];   
+		    	// 그려지고 있는 선을 표시할 선 객체에 좌표 배열을 설정합니다
+		         drawingLine.setPath(linePath);  
+		         // 원의 반지름을 선 객체를 이용해서 얻어옵니다 
+		         var length = drawingLine.getLength();
+		         if(Math.round(length) <500){
+		        	 /* debugger; */
+		        	 console.log(tempResult);
+		        	 oooo.push(tempResult);
+		         }
+		         
+	     	}
+	    	
+		});
+	}
+    }else {
+    	alert("기다려");
+    }
        
         	
-        	if(results[0].fullName === result[0][1].substring(0,12)){
-        		 geocoder.addr2coord(result[0][1], function(status, result) {
-
-        		    // 정상적으로 검색이 완료됐으면 
-        		     if (status === daum.maps.services.Status.OK) {
-        		    	 var coords = new daum.maps.LatLng(result.addr[0].lat, result.addr[0].lng);
-        		    	 var linePath = [mouseEvent.latLng, coords];   
-        		    	// 그려지고 있는 선을 표시할 선 객체에 좌표 배열을 설정합니다
-        		         drawingLine.setPath(linePath);  
-        		         // 원의 반지름을 선 객체를 이용해서 얻어옵니다 
-        		         var length = drawingLine.getLength();
-        		         if(Math.round(length) <500){
-        		        	 addMarker(coords);  
-        		         }
-        		         
-        		         
-        		        
-        		    } 
-        		}); 
-        		
-        	}
-        }   
-    }); 
+    if(oooo.length > 0){
+    	
     
-     
+    	for(var a=0;a<oooo.length;a++){
+    		console.log(oooo[a]);
+    		console.log(oooo);
+    		geocoder.addr2coord(oooo[a].siteWhlAddr, function(status, resultz) {
+  
+    			var coords = new daum.maps.LatLng(resultz.addr[0].lat, resultz.addr[0].lng);
+    			addMarker(coords);
+    		});
+    	}
+    }
+
+		        	 /* var content = '<div class="customoverlay" id="uniq">' +
+    		         '  <a href="http://map.daum.net/link/map/11394059" target="_blank">' +
+    		         '    <span class="title">업체 수 :'+ oooo.length + '</span>' +
+    		         '    <span class="title">운영 업체 수 :'+ open + '</span>' +
+    		           '    <span class="title">폐영 업체 수 :'+ result.length-open + '</span>' + 
+    		         '  </a>' +
+    		         '</div>';
+    		         customOverlay.setContent(content)
+     		        customOverlay.setMap(map);
+		        	 addMarker(coords);   */
+	
+		
     circle.setMap(map);
     
-});
+})
 function searchAddrFromCoords(coords, callback) {
     // 좌표로 주소 정보를 요청합니다
     geocoder.coord2addr(coords, callback);         
@@ -273,6 +289,7 @@ function setMarkers(map) {
 }
 
 
+
 </script>
 </div>
     </div><!-- /.container -->
@@ -290,6 +307,26 @@ function setMarkers(map) {
       
       $(document).ready(function() {
     	  $('#map').height($(document).height() - 270 + "px");
+    	  $('#temp').click(function(){
+    		  $.ajax({
+    	        	url: "http://119.205.252.243:8080/data/chicken/local/충청북도/충주시/단월동",
+    	        	type: "get",
+
+    	        	datatype: "json",
+    	        	success: function(result){
+    	        		console.log( 'result');
+    	        		console.log( result);
+    	        		
+    	        		resultAll = result;
+    	        		
+    	        		
+    	        		    	 
+    	          },
+    	        	error: function(){
+    	        		
+    	        	}
+    	        });
+    	  })
       });
       </script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
