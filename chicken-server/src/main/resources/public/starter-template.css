@@ -43,3 +43,11 @@ footer.row {
 	position: fixed;
 	bottom: 0;
 }
+
+.padding-top-little {
+	padding-top: 20px;
+}
+
+.padding-top-little .input-group{
+	margin-bottom: 10px;
+}
