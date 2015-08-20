@@ -38,6 +38,7 @@ local.properties
 
 # sbteclipse plugin
 .target
+chicken-server/target/
 
 # TeXlipse plugin
 .texlipse
