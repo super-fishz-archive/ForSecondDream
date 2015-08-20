@@ -11,3 +11,35 @@ body {
 .sidebar{
 	margin-bottom: 15px;
 }
+
+.region_area {
+	background-color: #ddd;
+	border: 1px solid #337ab7;
+}
+
+.region_area .list-group{
+	height: 125px;
+	overflow-y: scroll;
+}
+
+html, body {
+	height: 100%;
+}
+
+html {
+	overflow-x: hidden;
+}
+
+#map {
+	margin-top: 10px;
+}
+#map-wrapper {
+	margin-top: 10px;
+	padding-left: 0;
+	padding-right: 0;
+}
+
+footer.row {
+	position: fixed;
+	bottom: 0;
+}

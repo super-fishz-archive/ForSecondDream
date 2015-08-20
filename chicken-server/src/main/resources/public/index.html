@@ -9,7 +9,7 @@
     <meta name="author" content="">
 <link href="starter-template.css" rel="stylesheet">
 <script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=06f2863fc2eafefffa21cd50eab7e072"></script>
-    <title>Starter Template for Bootstrap</title>
+    <title>For Second Dream</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
@@ -53,12 +53,11 @@
 
 
 
- <div class="row">
-  <div class="col-md-4" style="
-    background-color: #ddd;
-    border: 1px solid #337ab7;">
+    <div class="container">
+ <div class="row" style="height:100%">
+  <div class="col-md-4 region_area">
   <h5>시/도</h5>
-  <div class="list-group" style="overflow-y:scroll; height:125px;">
+  <div class="list-group">
   <a href="#" class="list-group-item active">세종특별자치시</a>
   <a href="#" class="list-group-item">서울</a>
   <a href="#" class="list-group-item">부산</a>
@@ -79,24 +78,16 @@
 </div>
          
 </div>
-  <div class="col-md-4" style="
-    background-color: #ddd;
-    border: 1px solid #337ab7;">
+  <div class="col-md-4 region_area">
   <h5>구/시</h5>
-  <div class="list-group" style="overflow-y:scroll; height:125px;">
+  <div class="list-group">
   <a href="#" class="list-group-item active">세종특별자치시</a>
   <a href="#" class="list-group-item">서울</a>
   <a href="#" class="list-group-item">부산</a>
-       </div></div>
-       
-       
-       
-       
-  <div class="col-md-4" style="
-    background-color: #ddd;
-    border: 1px solid #337ab7;">
-  <h5>면/동</h5>
-  <div class="list-group" style="overflow-y:scroll; height:125px;">
+</div></div>
+  <div class="col-md-4 region_area">
+  <h5>구/시</h5>
+  <div class="list-group">
   <a href="#" class="list-group-item active">세종특별자치시</a>
   <a href="#" class="list-group-item">서울</a>
   <a href="#" class="list-group-item">부산</a>	
@@ -107,7 +98,7 @@
 
 
 
-      <div class="col-md-12 main">
+      <div class="col-md-12 main" id="map-wrapper">
       <div id="map" style="width:100%;height:450px;"></div>
       <script>
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
@@ -147,7 +138,10 @@ daum.maps.event.addListener(map, 'click', function(mouseEvent) {
 
 </script>
 </div>
-</div>
+    </div><!-- /.container -->
+<footer class="row">
+© GTFM. All Rights Reserved.
+</footer>
     </div><!-- /.container -->
 
 
