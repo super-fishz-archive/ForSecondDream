@@ -1,6 +1,26 @@
 body {
   padding-top: 50px;
 }
+.customoverlay {
+	position:relative;
+	bottom:85px;
+	border-radius:6px;
+	border: 1px solid #ccc;
+	border-bottom:2px solid #ddd;
+	float:left;
+	color:#000;
+}
+
+
+.customoverlay .title {
+	display:block;
+	text-align:center;
+	background:#fff;
+	padding:10px 15px;
+	font-size:14px;
+	font-weight:bold;
+}
+
 .starter-template {
   padding: 40px 15px;
  
