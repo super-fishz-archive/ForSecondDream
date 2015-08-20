@@ -57,15 +57,15 @@
  <div class="row" style="height:100%; width:100%; margin:0 auto;">
   <div class="col-md-4 region_area">
   <h5>시/도</h5>
-  <div class="list-group">
-  <a href="#" class="list-group-item active">세종특별자치시</a>
-  <a href="#" class="list-group-item">서울</a>
-  <a href="#" class="list-group-item">부산</a>
-  <a href="#" class="list-group-item">대구</a>
-  <a href="#" class="list-group-item">인천</a>
-  <a href="#" class="list-group-item">광주</a>
-  <a href="#" class="list-group-item">대전</a>
-  <a href="#" class="list-group-item">울산</a>
+  <div class="list-group first-region">
+  <a href="#" class="list-group-item">세종특별자치시</a>
+  <a href="#" class="list-group-item">서울특별시</a>
+  <a href="#" class="list-group-item">부산광역시</a>
+  <a href="#" class="list-group-item">대구광역시</a>
+  <a href="#" class="list-group-item">인천광역시</a>
+  <a href="#" class="list-group-item">광주광역시</a>
+  <a href="#" class="list-group-item">대전광역시</a>
+  <a href="#" class="list-group-item">울산광역시</a>
   <a href="#" class="list-group-item">경기도</a>
   <a href="#" class="list-group-item">강원도</a>
   <a href="#" class="list-group-item">충청북도</a>
@@ -74,23 +74,19 @@
   <a href="#" class="list-group-item">전라남도</a>
   <a href="#" class="list-group-item">경상북도</a>
   <a href="#" class="list-group-item">경상남도</a>
-  <a href="#" class="list-group-item">제주</a>
+  <a href="#" class="list-group-item">제주특별자치도</a>
 </div>
          
 </div>
   <div class="col-md-4 region_area">
   <h5>구/시</h5>
-  <div class="list-group">
-  <a href="#" class="list-group-item active">세종특별자치시</a>
-  <a href="#" class="list-group-item">서울</a>
-  <a href="#" class="list-group-item">부산</a>
+  <div class="list-group second-region">
+  <a href="#" class="list-group-item">지역을 선택해주세요</a>
 </div></div>
   <div class="col-md-4 region_area">
   <h5>구/시</h5>
-  <div class="list-group">
-  <a href="#" id="temp" class="list-group-item active">세종특별자치시</a>
-  <a href="#" class="list-group-item">서울</a>
-  <a href="#" class="list-group-item">부산</a>	
+  <div class="list-group third-region">
+  <a href="#" id="temp" class="list-group-item">지역을 선택해주세요</a>
         </div>
       </div>
       <div class="col-md-12">
@@ -243,6 +239,9 @@ function setMarkers(map) {
     }            
 }
 
+function getFirstRegion() {
+}
+
 </script>
 </div>
     </div><!-- /.container -->
@@ -258,12 +257,46 @@ function setMarkers(map) {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
       <script>
       
-      $(document).ready(function() {
-    	  $('#map').height($(document).height() - 270 + "px");
-    	  $('#temp').click(function(){
+      function clearSecond() {
+              $('.second-region a').detach();
+      }
+      function clearThird() {
+              $('.third-region a').detach();
+      }
+      
+      function bindSecondFunction(e) {
+    		  $('.second-region a.active').removeClass('active');
+    		  $(e.target).addClass('active');
+    	      $('#loadingDiv').toggle();
+
+    		  $.ajax({
+    	        	url: "http://119.205.252.243:8080/data/address/" + $('.first-region a.active').text() + '/' + $('.second-region a.active').text(),
+    	        	type: "get",
+    	        	datatype: "json",
+    	        	success: function(result){
+    	        		clearThird();
+    		  $(result).each(function() {
+                      $('.third-region').append('<a href="#" class="list-group-item">' + this + '</a>');
+    		  });
+
+              $('.third-region a').bind("click",function() { bindThirdFunction(event)} );
+
+    	      $('#loadingDiv').toggle();
+    	        		console.log( result);
+    	          },
+    	        	error: function(){
+    	      $('#loadingDiv').toggle();
+    	      alert('결과가 없습니다.')
+    	        	}
+    	        });
+      }
+      function bindThirdFunction(e) {
+    		  $('.third-region a.active').removeClass('active');
+    		  $(e.target).addClass('active');
+
     	      $('#loadingDiv').toggle();
     		  $.ajax({
-    	        	url: "http://119.205.252.243:8080/data/chicken/local/충청북도/충주시/단월동",
+    	        	url: "http://119.205.252.243:8080/data/chicken/local/" + $('.first-region a.active').text() + '/' + $('.second-region a.active').text() + '/' + $('.third-region a.active').text(),
     	        	type: "get",
 
     	        	datatype: "json",
@@ -275,10 +308,40 @@ function setMarkers(map) {
     	        		resultAll = result;
     	          },
     	        	error: function(){
+    	      $('#loadingDiv').toggle();
+    	      alert('결과가 없습니다.')
     	        		
     	        	}
     	        });
-    	  })
+      }
+      
+      $(document).ready(function() {
+    	  $('#map').height($(document).height() - 270 + "px");
+    	  $('.first-region a').click(function(){ // first region click
+    		  $('.first-region a.active').removeClass('active');
+    		  $(this).addClass('active');
+    	      $('#loadingDiv').toggle();
+    		  $.ajax({
+    	        	url: "http://119.205.252.243:8080/data/address/" + this.text,
+    	        	type: "get",
+    	        	datatype: "json",
+    	        	success: function(result){
+    	        		clearSecond();
+    		  $(result).each(function() {
+                      $('.second-region').append('<a href="#" class="list-group-item">' + this + '</a>');
+    		  });
+              $('.second-region a').bind("click",function() { bindSecondFunction(event)} );
+
+    	      $('#loadingDiv').toggle();
+    	        		console.log( result);
+    	          },
+    	        	error: function(){
+    	      $('#loadingDiv').toggle();
+    	      alert('결과가 없습니다.')
+    	        	}
+    	        });
+    	  });
+
       });
       </script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
