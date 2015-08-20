@@ -52,8 +52,11 @@ public class Controller {
 			return new ResponseEntity<>(chickenList, map, HttpStatus.OK);
 			
 		}catch(Exception e){
+			
+			MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+			map.add("Access-Control-Allow-Origin", "*");
 			e.printStackTrace(System.out);
-			return ResponseEntity.badRequest().build();
+			return new ResponseEntity(map, HttpStatus.BAD_REQUEST);
 		}
 	}
 	

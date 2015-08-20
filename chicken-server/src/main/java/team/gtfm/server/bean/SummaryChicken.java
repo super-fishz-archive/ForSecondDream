@@ -7,7 +7,8 @@ public class SummaryChicken {
 	private String bplcNm;
 	private String siteWhlAddr;
 	private String rdnWhlAddr;
-
+	private String trdStateNm;
+	
 	public int getRowNum() {
 		return rowNum;
 	}
@@ -32,5 +33,12 @@ public class SummaryChicken {
 	public void setRdnWhlAddr(String rdnWhlAddr) {
 		this.rdnWhlAddr = rdnWhlAddr;
 	}
+	public String getTrdStateNm() {
+		return trdStateNm;
+	}
+	public void setTrdStateNm(String trdStateNm) {
+		this.trdStateNm = trdStateNm;
+	}
+	
 	
 }

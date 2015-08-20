@@ -35,7 +35,7 @@ public class ChickenDao {
 	
 	public LocalChicken selectLocalChickens(String simpleAddr){
 		try(MappingSession session = factoryBean.getMappingSessionFactory().openSession()){ 
-			String sql1 = "SELECT row_num, bplc_nm, site_whl_addr, rdn_whl_addr FROM chicken_tb WHERE site_whl_addr LIKE \"" + simpleAddr + "%\"";
+			String sql1 = "SELECT row_num, bplc_nm, site_whl_addr, rdn_whl_addr, trd_state_nm FROM chicken_tb WHERE site_whl_addr LIKE \"" + simpleAddr + "%\"";
 			List<SummaryChicken> summaryChickens = session.selectList(sql1, SummaryChicken.class);
 			
 			String sql2 = "SELECT * FROM chicken_open_close_tb WHERE address LIKE \"" + simpleAddr + "\"";
