@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 <link href="starter-template.css" rel="stylesheet">
-<script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=06f2863fc2eafefffa21cd50eab7e072"></script>
+<script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=06f2863fc2eafefffa21cd50eab7e072&libraries=services"></script>
     <title>For Second Dream</title>
 
     <!-- Bootstrap core CSS -->
@@ -101,6 +101,21 @@
       <div class="col-md-12 main" id="map-wrapper">
       <div id="map" style="width:100%;height:450px;"></div>
       <script>
+      var result = new Array(1);
+      var markers = [];
+      var drawingLine = new daum.maps.Polyline({
+          strokeWeight: 3, // 선의 두께입니다
+          strokeColor: '#00a0e9', // 선의 색깔입니다
+          strokeOpacity: 1, // 선의 불투명도입니다 0에서 1 사이값이며 0에 가까울수록 투명합니다
+          strokeStyle: 'solid' // 선의 스타일입니다
+      });
+      for(var i=0;i<result.length;i++){
+    	  result[i] = new Array(3);
+      }
+      result[0][0] = "네네 치킨";
+      result[0][1] = "충청북도 충주시 달천동 479-16";
+      result[0][2] = true;
+      
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
     mapOption = { 
         center: new daum.maps.LatLng(36.947845, 127.908517), // 지도의 중심좌표
@@ -108,11 +123,9 @@ var mapContainer = document.getElementById('map'), // 지도를 표시할 div
     };
 
 // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+var geocoder = new daum.maps.services.Geocoder();
 var map = new daum.maps.Map(mapContainer, mapOption);
-var marker = new daum.maps.Marker({ 
-    // 지도 중심좌표에 마커를 생성합니다 
-    position: map.getCenter() 
-}); 
+
 var circle = new daum.maps.Circle({
     center : new daum.maps.LatLng(null, null),  // 원의 중심좌표 입니다 
     radius: 500, // 미터 단위의 원의 반지름입니다 
@@ -123,17 +136,82 @@ var circle = new daum.maps.Circle({
     fillColor: '#CFE7FF', // 채우기 색깔입니다
     fillOpacity: 0.7  // 채우기 불투명도 입니다   
 });
+
 daum.maps.event.addListener(map, 'click', function(mouseEvent) {
     // 클릭한 위도, 경도 정보를 가져옵니다 
     var latlng = mouseEvent.latLng; 
+    setMarkers(null);   
+    addMarker(latlng);
     circle.setPosition(new daum.maps.LatLng(latlng.getLat(), latlng.getLng()));
     // 마커 위치를 클릭한 위치로 옮깁니다
-    marker.setPosition(latlng);
-    marker.setMap(map);
+   
+    /* $.jax({
+    	url: ,
+    	type: "get",
+    	datatype: "json",
+    	success: function(result){
+    		result
+    	},
+    	error: function(){
+    		
+    	}
+    }) */
+    var temp;
+     searchAddrFromCoords(mouseEvent.latLng, function(status, results) {
+        if (status === daum.maps.services.Status.OK) {
+
+       
+        	
+        	if(results[0].fullName === result[0][1].substring(0,12)){
+        		 geocoder.addr2coord(result[0][1], function(status, result) {
+
+        		    // 정상적으로 검색이 완료됐으면 
+        		     if (status === daum.maps.services.Status.OK) {
+        		    	 var coords = new daum.maps.LatLng(result.addr[0].lat, result.addr[0].lng);
+        		    	 var linePath = [mouseEvent.latLng, coords];   
+        		    	// 그려지고 있는 선을 표시할 선 객체에 좌표 배열을 설정합니다
+        		         drawingLine.setPath(linePath);  
+        		         // 원의 반지름을 선 객체를 이용해서 얻어옵니다 
+        		         var length = drawingLine.getLength();
+        		         if(Math.round(length) <500){
+        		        	 addMarker(coords);  
+        		         }
+        		         
+        		         
+        		        
+        		    } 
+        		}); 
+        		
+        	}
+        }   
+    }); 
+    
+     
     circle.setMap(map);
     
-    
 });
+function searchAddrFromCoords(coords, callback) {
+    // 좌표로 주소 정보를 요청합니다
+    geocoder.coord2addr(coords, callback);         
+}
+function addMarker(position) {
+    
+    // 마커를 생성합니다
+    var marker = new daum.maps.Marker({
+        position: position
+    });
+
+    // 마커가 지도 위에 표시되도록 설정합니다
+    marker.setMap(map);
+    
+    // 생성된 마커를 배열에 추가합니다
+    markers.push(marker);
+}
+function setMarkers(map) {
+    for (var i = 0; i < markers.length; i++) {
+        markers[i].setMap(map);
+    }            
+}
 
 
 </script>
