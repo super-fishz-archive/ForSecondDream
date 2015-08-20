@@ -6,6 +6,14 @@ package team.gtfm.server.db;
  *
  */
 public class MappingSessionFactoryBean {
-	private static MappingSessionFactory factory;
+	private MappingSessionFactory factory;
+	
+	public MappingSessionFactoryBean(){
+		this.factory = MappingSessionFactory.get();
+	}
+	
+	public MappingSessionFactory getMappingSessionFactory(){
+		return factory;
+	}
 	
 }

@@ -1,6 +1,5 @@
 package team.gtfm.server.bean;
 
-import java.util.Date;
 
 /**
  * TODO apvPermYmd는 현재 Date타입인데 Hive에서도 올바르게 동작할지는 모른다.
@@ -12,7 +11,7 @@ public class Chicken {
 	private String bplcNm;
 	private String siteWhlAddr;
 	private String rdnWhlAddr;
-	private Date apvPermYmd;
+	private String apvPermYmd;
 	private String trdStateNm;
 	private int siteArea;
 	private int sitePostNo;
@@ -26,9 +25,10 @@ public class Chicken {
 	private String trdpJubnSeNm;
 	private String sntCobNm;
 	private String sntUptaeNm;
+	private int totEpNum;
 	private String memo;
 	private String kind;
-	private String kind_detail;
+	private String kindDetail;
 
 	public int getRowNum() {
 		return rowNum;
@@ -60,14 +60,6 @@ public class Chicken {
 
 	public void setRdnWhlAddr(String rdnWhlAddr) {
 		this.rdnWhlAddr = rdnWhlAddr;
-	}
-
-	public Date getApvPermYmd() {
-		return apvPermYmd;
-	}
-
-	public void setApvPermYmd(Date apvPermYmd) {
-		this.apvPermYmd = apvPermYmd;
 	}
 
 	public String getTrdStateNm() {
@@ -174,6 +166,10 @@ public class Chicken {
 		this.sntUptaeNm = sntUptaeNm;
 	}
 
+	public void setApvPermYmd(String apvPermYmd) {
+		this.apvPermYmd = apvPermYmd;
+	}
+
 	public String getMemo() {
 		return memo;
 	}
@@ -190,13 +186,28 @@ public class Chicken {
 		this.kind = kind;
 	}
 
-	public String getKind_detail() {
-		return kind_detail;
+	public int getTotEpNum() {
+		return totEpNum;
 	}
 
-	public void setKind_detail(String kind_detail) {
-		this.kind_detail = kind_detail;
+	public void setTotEpNum(int totEpNum) {
+		this.totEpNum = totEpNum;
 	}
 
+	public String getKindDetail() {
+		return kindDetail;
+	}
+
+	public void setKindDetail(String kindDetail) {
+		this.kindDetail = kindDetail;
+	}
+
+	public String getApvPermYmd() {
+		return apvPermYmd;
+	}
+	
+	
+
+	
 	
 }
