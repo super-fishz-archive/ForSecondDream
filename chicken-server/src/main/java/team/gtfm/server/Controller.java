@@ -48,4 +48,30 @@ public class Controller {
 			return ResponseEntity.badRequest().build();
 		}
 	}
+	
+	@RequestMapping(value="/data/address/{firstAddr}", produces=CONTENT_TYPE)
+	public ResponseEntity<?> getAddressInfoWithFirst(@PathVariable String firstAddr){
+		try{
+			List<String> addrList = chickenDao.selectAddress(firstAddr);
+			
+			return ResponseEntity.ok(addrList);
+			
+		}catch(Exception e){
+			e.printStackTrace(System.out);
+			return ResponseEntity.badRequest().build();
+		}
+	}
+	
+	@RequestMapping(value="/data/address/{firstAddr}/{secondAddr}", produces=CONTENT_TYPE)
+	public ResponseEntity<?> getAddressInfoWithSecond(@PathVariable String firstAddr, @PathVariable String secondAddr){
+		try{
+			List<String> addrList = chickenDao.selectAddress(firstAddr, secondAddr);
+			
+			return ResponseEntity.ok(addrList);
+			
+		}catch(Exception e){
+			e.printStackTrace(System.out);
+			return ResponseEntity.badRequest().build();
+		}
+	}
 }

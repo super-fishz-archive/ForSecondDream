@@ -1,6 +1,9 @@
 package team.gtfm.server.db;
 
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +43,55 @@ public class ChickenDao {
 			localChicken.setSummaryChickens(summaryChickens);
 			
 			return localChicken;
+		}
+	}
+	
+	public List<String> selectAddress(String firstAddr){
+		/*
+		 * 경원 매핑 모듈은 원시타입 매핑을 지원하지 않습니다. 
+		 */
+		try(MappingSession session = factoryBean.getMappingSessionFactory().openSession()){ 
+			List<String> addrList = new ArrayList<>();
+			
+			String sql = "SELECT DISTINCT second_addr FROM address_tb WHERE first_addr = ?";
+			PreparedStatement pstmt = session.parepareStatement(sql);
+			pstmt.setString(1, firstAddr);
+			ResultSet resultSet = pstmt.executeQuery();
+			
+			while(resultSet.next()){
+				addrList.add(resultSet.getString(1));
+			}
+			
+			return addrList;
+			
+		}catch(Exception e){
+			e.printStackTrace(System.out);
+			throw new RuntimeException("Error in selectAddress(firstAddr). " + e.getMessage());
+		}
+	}
+	
+	public List<String> selectAddress(String firstAddr, String secondAddr){
+		/*
+		 * 경원 매핑 모듈은 원시타입 매핑을 지원하지 않습니다. 
+		 */
+		try(MappingSession session = factoryBean.getMappingSessionFactory().openSession()){ 
+			List<String> addrList = new ArrayList<>();
+			
+			String sql = "SELECT DISTINCT third_addr FROM address_tb WHERE first_addr = ? AND second_addr = ?";
+			PreparedStatement pstmt = session.parepareStatement(sql);
+			pstmt.setString(1, firstAddr);
+			pstmt.setString(2, secondAddr);
+			ResultSet resultSet = pstmt.executeQuery();
+			
+			while(resultSet.next()){
+				addrList.add(resultSet.getString(1));
+			}
+			
+			return addrList;
+			
+		}catch(Exception e){
+			e.printStackTrace(System.out);
+			throw new RuntimeException("Error in selectAddress(firstAddr, secondAddr). " + e.getMessage());
 		}
 	}
 	
