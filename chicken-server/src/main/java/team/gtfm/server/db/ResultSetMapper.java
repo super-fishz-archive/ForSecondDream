@@ -56,8 +56,8 @@ public class ResultSetMapper {
 			return instance;
 			
 		}catch(Exception e){
-			e.printStackTrace(System.err);
-			throw new RuntimeException("Error mapping in ResultSetMapper.read");
+			e.printStackTrace(System.out);
+			throw new RuntimeException("Error mapping in ResultSetMapper.read. " + e.getMessage());
 		}
 	}
 }
