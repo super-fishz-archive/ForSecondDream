@@ -8,7 +8,7 @@
   </select>
   
   <select id="selectChicken" resultType="team.gtfm.server.bean.Chicken">
-  	select * from chicken_tb limit ${start}, ${limit}
+  	select * from chicken_tb limit ${limit}
   </select>
   
   <select id="selectSummaryChicken" resultType="team.gtfm.server.bean.SummaryChicken">
@@ -16,9 +16,4 @@
   	from chicken_tb
   	limit ${start}, ${limit}
   </select>
-  
-  <insert id="insertChickenCoord" parameterType="team.gtfm.server.bean.Coord">
-  	insert into coord_tb (chicken_row_num, lat, lng)
-  	values (#{chickenRowNum}, #{lat}, #{lng})
-  </insert>
 </mapper>
