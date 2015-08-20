@@ -1,6 +1,26 @@
 body {
   padding-top: 50px;
 }
+.customoverlay {
+	position:relative;
+	bottom:85px;
+	border-radius:6px;
+	border: 1px solid #ccc;
+	border-bottom:2px solid #ddd;
+	float:left;
+	color:#000;
+}
+
+
+.customoverlay .title {
+	display:block;
+	text-align:center;
+	background:#fff;
+	padding:10px 15px;
+	font-size:14px;
+	font-weight:bold;
+}
+
 .starter-template {
   padding: 40px 15px;
  
@@ -50,4 +70,22 @@ footer.row {
 
 .padding-top-little .input-group{
 	margin-bottom: 10px;
+}
+
+#loading {
+	margin-top: 33%;
+	margin-left: 16%;
+}
+#loadingDiv {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2000;
+    background-color: rgba(0,0,0,0.7);
+    text-align: center;
+    vertical-align: middle;
+    display: none;
+}
 }

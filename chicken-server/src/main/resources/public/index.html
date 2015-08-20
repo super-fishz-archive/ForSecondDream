@@ -93,78 +93,34 @@
   <a href="#" class="list-group-item">부산</a>	
         </div>
       </div>
-
-
-
-
-
       <div class="col-md-12">
       <div class="row">
-      <div class="col-md-2">
-      <!-- --->
-      <div class="row">
-  <div class="col-lg-12 padding-top-little">
-    <div class="input-group">
-      <span class="input-group-addon">
-        <input type="checkbox" aria-label="...">
-      </span>
-     <label class="form-control">폐업 표시</label>
-    </div><!-- /input-group -->
-    <div class="input-group">
-      <span class="input-group-addon">
-        <input type="checkbox" aria-label="...">
-      </span>
-     <label class="form-control">폐업 표시</label>
-    </div><!-- /input-group -->
-    <div class="input-group">
-      <span class="input-group-addon">
-        <input type="checkbox" aria-label="...">
-      </span>
-     <label class="form-control">폐업 표시</label>
-    </div><!-- /input-group -->
-    <div class="input-group">
-      <span class="input-group-addon">
-        <input type="checkbox" aria-label="...">
-      </span>
-     <label class="form-control">폐업 표시</label>
-    </div><!-- /input-group -->
-    <div class="input-group">
-      <span class="input-group-addon">
-        <input type="checkbox" aria-label="...">
-      </span>
-     <label class="form-control">폐업 표시</label>
-    </div><!-- /input-group -->
-    <div class="input-group">
-      <span class="input-group-addon">
-        <input type="checkbox" aria-label="...">
-      </span>
-     <label class="form-control">폐업 표시</label>
-    </div><!-- /input-group -->
-    <div class="input-group">
-      <span class="input-group-addon">
-        <input type="checkbox" aria-label="...">
-      </span>
-     <label class="form-control">폐업 표시</label>
-    </div><!-- /input-group -->
-    <div class="input-group">
-      <span class="input-group-addon">
-        <input type="checkbox" aria-label="...">
-      </span>
-     <label class="form-control">폐업 표시</label>
-    </div><!-- /input-group -->
-  </div><!-- /.col-lg-6 -->
-</div><!-- /.row -->
-      <!-- --->
-      </div>
       <div class="col-md-10 main" id="map-wrapper">
       <div id="map" style="height:680px;"></div>
       </div>
+      <div class="col-md-2">
+      </div>
+      <div id="loadingDiv">
+              <img src="/lc.gif" id="loading" />
+      </div>
+      </div>
       </div>
       
+      <div id="overlayForm" >
+	  	  <div class="customoverlay" id="uniq">
+	         <a href="http://map.daum.net/link/map/11394059" target="_blank">
+	          <span id="chickenNum" class="title"></span>
+	           <span id="chickenOpenNum" class="title"></span>
+	           <span id="chickenCloseNum" class="title"></span>
+	         </a>
+	       </div>
+	  </div>
+    		         
       <script>
       var markers = [];
       var oooo =[];
       var resultAll;
+      var flag = 0;
       var drawingLine = new daum.maps.Polyline({
           strokeWeight: 3, // 선의 두께입니다
           strokeColor: '#00a0e9', // 선의 색깔입니다
@@ -193,9 +149,14 @@ var circle = new daum.maps.Circle({
 });
 
 daum.maps.event.addListener(map, 'click', function(mouseEvent) {
-	if(document.getElementById("uniq")!= null){
-	    document.getElementById("uniq").remove();
- 	}
+	
+	if(markers.length > 0){
+		setMarkers(null); 
+		markers = [];
+	}
+	if(oooo.length > 0){
+		oooo = [];
+	}
     // 클릭한 위도, 경도 정보를 가져옵니다 
     var latlng = mouseEvent.latLng; 
     var customOverlay = new daum.maps.CustomOverlay({
@@ -203,68 +164,35 @@ daum.maps.event.addListener(map, 'click', function(mouseEvent) {
 	    position: mouseEvent.latLng,
 	    yAnchor: 1 
 	});
-    setMarkers(null);   
+    
     addMarker(latlng);
     circle.setPosition(new daum.maps.LatLng(latlng.getLat(), latlng.getLng()));
 	
     if(typeof resultAll != "undefined"){
-    	console.log(typeof resultAll);
-    // 마커 위치를 클릭한 위치로 옮깁니다
-    for(var i =0;i<resultAll.summaryChickens.length;i++){
-		var tempResult = resultAll.summaryChickens[i];
-		geocoder.addr2coord(tempResult.siteWhlAddr, function(status, resultz) {
-	    	// 정상적으로 검색이 완료됐으면 
-	     	if (status === daum.maps.services.Status.OK) {
-	     		var coords = new daum.maps.LatLng(resultz.addr[0].lat, resultz.addr[0].lng);
-		    	 var linePath = [latlng, coords];   
-		    	// 그려지고 있는 선을 표시할 선 객체에 좌표 배열을 설정합니다
-		         drawingLine.setPath(linePath);  
-		         // 원의 반지름을 선 객체를 이용해서 얻어옵니다 
-		         var length = drawingLine.getLength();
-		         if(Math.round(length) <500){
-		        	 /* debugger; */
-		        	 console.log(tempResult);
-		        	 oooo.push(tempResult);
-		         }
-		         
-	     	}
 	    	
-		});
-	}
+	    // 마커 위치를 클릭한 위치로 옮깁니다
+	    
+	    for(var i =0;i<resultAll.summaryChickens.length;i++){
+			var tempResult = resultAll.summaryChickens[i];
+			geocoder.addr2coord(tempResult.siteWhlAddr, requestFunc(tempResult, latlng));
+		}
+	    
     }else {
     	alert("기다려");
     }
        
-        	
-    if(oooo.length > 0){
-    	
-    
-    	for(var a=0;a<oooo.length;a++){
-    		console.log(oooo[a]);
-    		console.log(oooo);
-    		geocoder.addr2coord(oooo[a].siteWhlAddr, function(status, resultz) {
-  
-    			var coords = new daum.maps.LatLng(resultz.addr[0].lat, resultz.addr[0].lng);
-    			addMarker(coords);
-    		});
-    	}
-    }
 
-		        	 /* var content = '<div class="customoverlay" id="uniq">' +
-    		         '  <a href="http://map.daum.net/link/map/11394059" target="_blank">' +
-    		         '    <span class="title">업체 수 :'+ oooo.length + '</span>' +
-    		         '    <span class="title">운영 업체 수 :'+ open + '</span>' +
-    		           '    <span class="title">폐영 업체 수 :'+ result.length-open + '</span>' + 
-    		         '  </a>' +
-    		         '</div>';
-    		         customOverlay.setContent(content)
-     		        customOverlay.setMap(map);
-		        	 addMarker(coords);   */
+
+	var content = $("#overlayForm").html();
+   	customOverlay.setContent(content);
+   	customOverlay.setMap(map);
+		        	   
 	
 		
     circle.setMap(map);
     
-})
+});
+
 function searchAddrFromCoords(coords, callback) {
     // 좌표로 주소 정보를 요청합니다
     geocoder.coord2addr(coords, callback);         
@@ -282,13 +210,38 @@ function addMarker(position) {
     // 생성된 마커를 배열에 추가합니다
     markers.push(marker);
 }
+
+
+function requestFunc(data, latlng){
+	var tempResult = data;
+	
+	return function(status, resultz){
+		// 정상적으로 검색이 완료됐으면 
+	 	if (status === daum.maps.services.Status.OK) {
+	 		var coords = new daum.maps.LatLng(resultz.addr[0].lat, resultz.addr[0].lng);
+	    	 var linePath = [latlng, coords];   
+	    	// 그려지고 있는 선을 표시할 선 객체에 좌표 배열을 설정합니다
+	         drawingLine.setPath(linePath);  
+	         // 원의 반지름을 선 객체를 이용해서 얻어옵니다 
+	         var length = drawingLine.getLength();
+	         if(Math.round(length) <500){
+	        	 /* debugger; */
+	        	 oooo.push(tempResult);
+	        	 addMarker(coords);
+	        	 
+	         }
+	         
+	        
+	 	}
+		
+	}
+}
+
 function setMarkers(map) {
     for (var i = 0; i < markers.length; i++) {
         markers[i].setMap(map);
     }            
 }
-
-
 
 </script>
 </div>
@@ -308,19 +261,18 @@ function setMarkers(map) {
       $(document).ready(function() {
     	  $('#map').height($(document).height() - 270 + "px");
     	  $('#temp').click(function(){
+    	      $('#loadingDiv').toggle();
     		  $.ajax({
     	        	url: "http://119.205.252.243:8080/data/chicken/local/충청북도/충주시/단월동",
     	        	type: "get",
 
     	        	datatype: "json",
     	        	success: function(result){
+    	      $('#loadingDiv').toggle();
     	        		console.log( 'result');
     	        		console.log( result);
     	        		
     	        		resultAll = result;
-    	        		
-    	        		
-    	        		    	 
     	          },
     	        	error: function(){
     	        		
