@@ -53,8 +53,8 @@
 
 
 
-    <div class="container">
- <div class="row" style="height:100%">
+    <div class="container" style="width: 100%">
+ <div class="row" style="height:100%; width:100%; margin:0 auto;">
   <div class="col-md-4 region_area">
   <h5>시/도</h5>
   <div class="list-group">
@@ -99,7 +99,7 @@
 
 
       <div class="col-md-12 main" id="map-wrapper">
-      <div id="map" style="width:100%;height:450px;"></div>
+      <div id="map" style="height:680px;"></div>
       <script>
       var result = new Array(1);
       var markers = [];
@@ -120,9 +120,7 @@ var mapContainer = document.getElementById('map'), // 지도를 표시할 div
     mapOption = { 
         center: new daum.maps.LatLng(36.947845, 127.908517), // 지도의 중심좌표
         level: 4 // 지도의 확대 레벨
-    };
-
-// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+        };
 var geocoder = new daum.maps.services.Geocoder();
 var map = new daum.maps.Map(mapContainer, mapOption);
 
@@ -227,6 +225,12 @@ function setMarkers(map) {
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+      <script>
+      
+      $(document).ready(function() {
+    	  $('#map').height($(document).height() - 270 + "px");
+      });
+      </script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
