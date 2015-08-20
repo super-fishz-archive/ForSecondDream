@@ -3,7 +3,10 @@ package team.gtfm.server;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,7 +26,10 @@ public class Controller {
 	public ResponseEntity<?> getSelectChickenList(@PathVariable int limit){
 		try{
 			List<Chicken> chickenList = chickenDao.selectChicken(limit);
-			return ResponseEntity.ok().body(chickenList);
+			
+			MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+			map.add("Access-Control-Allow-Origin", "*");
+			return new ResponseEntity<>(chickenList, map, HttpStatus.OK);
 		}catch(Exception e){
 			return ResponseEntity.badRequest().build();
 		}
@@ -41,7 +47,9 @@ public class Controller {
 			String simpleAddr = simpleAddrBuilder.toString();
 			LocalChicken chickenList = chickenDao.selectLocalChickens(simpleAddr);
 			
-			return ResponseEntity.ok(chickenList);
+			MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+			map.add("Access-Control-Allow-Origin", "*");
+			return new ResponseEntity<>(chickenList, map, HttpStatus.OK);
 			
 		}catch(Exception e){
 			e.printStackTrace(System.out);
@@ -54,7 +62,9 @@ public class Controller {
 		try{
 			List<String> addrList = chickenDao.selectAddress(firstAddr);
 			
-			return ResponseEntity.ok(addrList);
+			MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+			map.add("Access-Control-Allow-Origin", "*");
+			return new ResponseEntity<>(addrList, map, HttpStatus.OK);
 			
 		}catch(Exception e){
 			e.printStackTrace(System.out);
@@ -67,7 +77,9 @@ public class Controller {
 		try{
 			List<String> addrList = chickenDao.selectAddress(firstAddr, secondAddr);
 			
-			return ResponseEntity.ok(addrList);
+			MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+			map.add("Access-Control-Allow-Origin", "*");
+			return new ResponseEntity<>(addrList, map, HttpStatus.OK);
 			
 		}catch(Exception e){
 			e.printStackTrace(System.out);
