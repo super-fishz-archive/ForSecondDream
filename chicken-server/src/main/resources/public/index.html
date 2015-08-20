@@ -160,15 +160,7 @@
       </div>
       </div>
       
-      <div id="overlayForm" >
-	  	  <div class="customoverlay" id="uniq">
-	         <a href="http://map.daum.net/link/map/11394059" target="_blank">
-	          <span id="chickenNum" class="title"></span>
-	           <span id="chickenOpenNum" class="title"></span>
-	           <span id="chickenCloseNum" class="title"></span>
-	         </a>
-	       </div>
-	  </div>
+     
     		         
       <script>
       var markers = [];
@@ -213,11 +205,7 @@ daum.maps.event.addListener(map, 'click', function(mouseEvent) {
 	}
     // 클릭한 위도, 경도 정보를 가져옵니다 
     var latlng = mouseEvent.latLng; 
-    var customOverlay = new daum.maps.CustomOverlay({
-    	map:map,
-	    position: mouseEvent.latLng,
-	    yAnchor: 1 
-	});
+    
     
     addMarker(latlng);
     circle.setPosition(new daum.maps.LatLng(latlng.getLat(), latlng.getLng()));
@@ -237,12 +225,6 @@ daum.maps.event.addListener(map, 'click', function(mouseEvent) {
        
 
 
-	var content = $("#overlayForm").html();
-   	customOverlay.setContent(content);
-   	customOverlay.setMap(map);
-		        	   
-	
-		
     circle.setMap(map);
     
 });
@@ -323,8 +305,7 @@ function setMarkers(map) {
     	        	datatype: "json",
     	        	success: function(result){
     	      $('#loadingDiv').toggle();
-    	        		console.log( 'result');
-    	        		console.log( result);
+    	        		
     	        		
     	        		resultAll = result;
     	          },
