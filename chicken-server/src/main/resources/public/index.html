@@ -95,7 +95,10 @@
      	 <div id="map" style="height:680px;"></div>
       </div>
       <div class="col-md-2 main" id="countAll">
-      	
+      	<div style="position:fixed; bottom: 0;">
+      	<a class="twitter-timeline" href="https://twitter.com/hashtag/%EC%B9%98%ED%82%A8" data-widget-id="634422835654451200">#치킨 관련 트윗</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+      	</div>
       </div>
       <div id="loadingDiv">
               <img src="/lc.gif" id="loading" />
@@ -353,14 +356,19 @@ function getFirstRegion() {
 
     	      $('#loadingDiv').toggle();
     		  $.ajax({
-    	        	url: "http://119.205.252.243:8080/data/chicken/local/" + $('.first-region a.active').text() + '/' + $('.second-region a.active').text() + '/' + $('.third-region a.active').text(),
+    	        	url: "http://119.205.252.243:8080/data/chicken/local/" + $('.first-region a.active').text() + '/' + $('.second-region a.active').text() + '/' + $('.third-region a.active').text().replace(/\d/,''),
     	        	type: "get",
-
+					
     	        	datatype: "json",
     	        	success: function(result){
-    	      $('#loadingDiv').toggle();
+    	      			$('#loadingDiv').toggle();
     	        		
-    	        		
+    	      			geocoder.addr2coord($('.first-region a.active').text() + ' ' + $('.second-region a.active').text() + ' ' + $('.third-region a.active').text().replace(/\d/,''), function(status, result) {
+    	    	  			var moveLatLon = new daum.maps.LatLng(result.addr[0].lat, result.addr[0].lng);
+    	    	    
+    	    	   			 // 지도 중심을 이동 시킵니다
+    	    	    		map.setCenter(moveLatLon);
+    	     			 });
     	        		resultAll = result;
     	          },
     	        	error: function(){
