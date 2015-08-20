@@ -88,7 +88,7 @@
   <div class="col-md-4 region_area">
   <h5>구/시</h5>
   <div class="list-group">
-  <a href="#" class="list-group-item active">세종특별자치시</a>
+  <a href="#" id="temp" class="list-group-item active">세종특별자치시</a>
   <a href="#" class="list-group-item">서울</a>
   <a href="#" class="list-group-item">부산</a>	
         </div>
@@ -164,6 +164,7 @@
       <script>
       var markers = [];
       var oooo =[];
+      var resultAll;
       var drawingLine = new daum.maps.Polyline({
           strokeWeight: 3, // 선의 두께입니다
           strokeColor: '#00a0e9', // 선의 색깔입니다
@@ -205,45 +206,36 @@ daum.maps.event.addListener(map, 'click', function(mouseEvent) {
     setMarkers(null);   
     addMarker(latlng);
     circle.setPosition(new daum.maps.LatLng(latlng.getLat(), latlng.getLng()));
-
-    
+	
+    if(typeof resultAll != "undefined"){
+    	console.log(typeof resultAll);
     // 마커 위치를 클릭한 위치로 옮깁니다
-   
+    for(var i =0;i<resultAll.summaryChickens.length;i++){
+		var tempResult = resultAll.summaryChickens[i];
+		geocoder.addr2coord(tempResult.siteWhlAddr, function(status, resultz) {
+	    	// 정상적으로 검색이 완료됐으면 
+	     	if (status === daum.maps.services.Status.OK) {
+	     		var coords = new daum.maps.LatLng(resultz.addr[0].lat, resultz.addr[0].lng);
+		    	 var linePath = [latlng, coords];   
+		    	// 그려지고 있는 선을 표시할 선 객체에 좌표 배열을 설정합니다
+		         drawingLine.setPath(linePath);  
+		         // 원의 반지름을 선 객체를 이용해서 얻어옵니다 
+		         var length = drawingLine.getLength();
+		         if(Math.round(length) <500){
+		        	 /* debugger; */
+		        	 console.log(tempResult);
+		        	 oooo.push(tempResult);
+		         }
+		         
+	     	}
+	    	
+		});
+	}
+    }else {
+    	alert("기다려");
+    }
        
         	
-        	$.ajax({
-        	url: "http://119.205.252.243:8080/data/chicken/local/충청북도/충주시/단월동",
-        	type: "get",
-
-        	datatype: "json",
-        	success: function(result){
-        		console.log( 'result');
-        		console.log( result);
-        		for(var i =0;i<result.summaryChickens.length;i++){
-        			geocoder.addr2coord(result.summaryChickens[i].siteWhlAddr, function(status, resultz) {
-        		    	// 정상적으로 검색이 완료됐으면 
-        		     	if (status === daum.maps.services.Status.OK) {
-        		     		var coords = new daum.maps.LatLng(resultz.addr[0].lat, resultz.addr[0].lng);
-        			    	 var linePath = [mouseEvent.latLng, coords];   
-        			    	// 그려지고 있는 선을 표시할 선 객체에 좌표 배열을 설정합니다
-        			         drawingLine.setPath(linePath);  
-        			         // 원의 반지름을 선 객체를 이용해서 얻어옵니다 
-        			         var length = drawingLine.getLength();
-        			         if(Math.round(length) <500){
-        			        	 /* debugger; */
-        			        	 console.log(result.summaryChickens[i]);
-        			        	 oooo.push(result.summaryChickens[i]);
-        			         }
-        			         
-        		     	}
-        			});
-        		}
-        		    	 
-          },
-        	error: function(){
-        		
-        	}
-        });
     if(oooo.length > 0){
     	
     
@@ -315,6 +307,26 @@ function setMarkers(map) {
       
       $(document).ready(function() {
     	  $('#map').height($(document).height() - 270 + "px");
+    	  $('#temp').click(function(){
+    		  $.ajax({
+    	        	url: "http://119.205.252.243:8080/data/chicken/local/충청북도/충주시/단월동",
+    	        	type: "get",
+
+    	        	datatype: "json",
+    	        	success: function(result){
+    	        		console.log( 'result');
+    	        		console.log( result);
+    	        		
+    	        		resultAll = result;
+    	        		
+    	        		
+    	        		    	 
+    	          },
+    	        	error: function(){
+    	        		
+    	        	}
+    	        });
+    	  })
       });
       </script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
